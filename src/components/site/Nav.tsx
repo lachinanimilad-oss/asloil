@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ShoppingBag, Heart, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useStore } from "@/lib/store";
-import logo from "../../assets/asloil-logo.jpg";
+import logo from "@/assets/asloil-logo.jpg";
 
 const links = [
   { to: "/", label: "Home" },

@@ -18,7 +18,15 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-E9K66V1C8X');
+</script>
 const reasons = [
   { n: "01", icon: Leaf, title: "Pure", desc: "100% natural argan oil sourced from Moroccan cooperatives." },
   { n: "02", icon: ShieldCheck, title: "Potent", desc: "Cold-pressed extracts, paraben & sulfate free." },

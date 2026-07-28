@@ -1,5 +1,4 @@
 import { Analytics } from "@vercel/analytics/react";
-import { Script } from "@tanstack/react-start";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -82,19 +81,21 @@ function RootShell({ children }: { children: ReactNode }) {
      <head>
   <HeadContent />
 
-  <Script
+  <script
     async
     src="https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X"
   />
 
-  <Script>
-    {`
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-E9K66V1C8X');
-    `}
-  </Script>
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-E9K66V1C8X');
+      `,
+    }}
+  />
 </head>
       <body>
         {children}

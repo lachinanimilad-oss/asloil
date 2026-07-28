@@ -66,6 +66,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" },
+      
+    
     ],
     
   }),
@@ -79,23 +81,15 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
      <head>
-  <HeadContent />
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X"
-  />
-
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-E9K66V1C8X');
-      `,
-    }}
-  />
+  gtag('config', 'G-E9K66V1C8X');
+</script>
 </head>
       <body>
         {children}

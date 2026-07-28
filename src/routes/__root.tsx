@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { Script } from "@tanstack/react-start";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -67,20 +68,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" },
     ],
-    scripts: [
-  {
-    src: "https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X",
-    async: true,
-  },
-  {
-    children: `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-E9K66V1C8X');
-    `,
-  },
-],
+    
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -91,7 +79,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <head><HeadContent /></head>
+     <head>
+  <HeadContent />
+
+  <Script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X"
+  />
+
+  <Script>
+    {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-E9K66V1C8X');
+    `}
+  </Script>
+</head>
       <body>
         {children}
         <Scripts />

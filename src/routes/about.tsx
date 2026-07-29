@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { products } from "@/lib/products";
-import { useT, useDocMeta } from "@/lib/i18n";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -17,19 +16,17 @@ export const Route = createFileRoute("/about")({
 });
 
 function About() {
-  const t = useT();
-  useDocMeta(t("meta.about.title"), t("meta.about.desc"));
   return (
     <div className="bg-background ambient-glow pt-40 pb-24">
       <div className="mx-auto max-w-4xl px-6">
-        <p className="text-xs uppercase tracking-[0.4em] text-gold text-center">{t("about.eyebrow")}</p>
-        <h1 className="mt-4 text-center font-serif text-5xl md:text-6xl">{t("about.title")}</h1>
+        <p className="text-xs uppercase tracking-[0.4em] text-gold text-center">Our Story</p>
+        <h1 className="mt-4 text-center font-serif text-5xl md:text-6xl">Nature In Your Hands</h1>
         <div className="gold-hairline mx-auto mt-6" />
 
         <div className="mt-16 space-y-6 text-lg text-muted-foreground">
-          <p>{t("about.p1")}</p>
-          <p>{t("about.p2")}</p>
-          <p>{t("about.p3")}</p>
+          <p>ASLOIL® was founded with a simple, uncompromising promise: to create luxury skincare rooted in what nature does best. Every product begins with the finest cold-pressed argan oil from Morocco — an ingredient prized for centuries for its ability to restore, protect and reveal the skin's natural radiance.</p>
+          <p>We believe premium care shouldn't require compromise. That's why every formula is free from parabens, sulfates, and harsh chemicals — and never tested on animals. Just pure, powerful ingredients, crafted in small batches by people who care deeply about what goes on your skin.</p>
+          <p>Whether it's our silken Face Cream, restorative Argan Oil, or nourishing Lip Balm, each ASLOIL® ritual is designed to feel like an act of self-respect — quiet, elegant, and effective.</p>
         </div>
 
         <div className="mt-16 grid grid-cols-2 gap-6 md:grid-cols-4">

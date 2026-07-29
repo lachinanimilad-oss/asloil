@@ -1,8 +1,8 @@
-import arganOil from "@/assets/argan_oil.png";
-import bodyLotion from "@/assets/body_lotion.png";
-import faceCream from "@/assets/face_cream.png";
-import facialToner from "@/assets/facial_toner.png";
-import lipBalm from "@/assets/lip_balm.png";
+import arganOil from "@/assets/argan_oil.png.asset.json";
+import bodyLotion from "@/assets/body_lotion.png.asset.json";
+import faceCream from "@/assets/face_cream.png.asset.json";
+import facialToner from "@/assets/facial_toner.png.asset.json";
+import lipBalm from "@/assets/lip_balm.png.asset.json";
 
 export type Product = {
   slug: string;
@@ -25,7 +25,7 @@ export const products: Product[] = [
     tagline: "Nature In Your Hands",
     description:
       "Pure, cold-pressed Moroccan argan oil for body, face and hair. A single drop restores softness, shine and elasticity.",
-    image: arganOil,
+    image: arganOil.url,
     price: "$10.00",
     size: "50ml / 1.69oz",
     benefits: [
@@ -48,7 +48,7 @@ export const products: Product[] = [
     tagline: "Deep Hydration & Softness",
     description:
       "Silky body lotion with argan oil and shea butter. Long-lasting hydration that leaves skin visibly softer.",
-    image: bodyLotion,
+    image: bodyLotion.url,
     price: "$10.00",
     size: "200ml / 6.76oz",
     benefits: [
@@ -70,7 +70,7 @@ export const products: Product[] = [
     tagline: "Nourishing & Hydrating",
     description:
       "Rich facial cream with argan oil and aloe vera. Nourishes, hydrates and helps repair the skin barrier.",
-    image: faceCream,
+    image: faceCream.url,
     price: "$10.00",
     size: "50ml / 1.69oz",
     benefits: [
@@ -92,7 +92,7 @@ export const products: Product[] = [
     tagline: "Refreshes & Balances",
     description:
       "Refreshing toner with rose water and argan oil. Balances the skin, tightens pores and preps for serum.",
-    image: facialToner,
+    image: facialToner.url,
     price: "$10.00",
     size: "100ml / 3.38oz",
     benefits: [
@@ -114,7 +114,7 @@ export const products: Product[] = [
     tagline: "Nourishing & Repairing",
     description:
       "Melt-in lip balm with argan oil and vitamin E. Repairs dry lips and locks in moisture for hours.",
-    image: lipBalm,
+    image: lipBalm.url,
     price: "$10.00",
     size: "5g / 0.17oz",
     benefits: [

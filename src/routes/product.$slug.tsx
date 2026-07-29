@@ -4,6 +4,7 @@ import { ChevronDown, Heart, ShoppingBag, ArrowLeft } from "lucide-react";
 import { getProduct, products, type Product } from "@/lib/products";
 import { ProductCard } from "@/components/site/ProductCard";
 import { useStore } from "@/lib/store";
+import { useProductI18n, useT, useDocMeta } from "@/lib/i18n";
 
 export const Route = createFileRoute("/product/$slug")({
   loader: ({ params }) => {
@@ -25,20 +26,22 @@ export const Route = createFileRoute("/product/$slug")({
 });
 
 function ProductPage() {
-  const { product } = Route.useLoaderData() as { product: Product };
+  const { product: base } = Route.useLoaderData() as { product: Product };
+  const product = useProductI18n(base);
   const { addToCart, toggleWishlist, wishlist } = useStore();
   const wished = wishlist.includes(product.slug);
   const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
+  const t = useT();
+  useDocMeta(`${product.name} — ASLOIL®`, product.description);
 
   return (
     <div className="bg-background ambient-glow pb-24 pt-32">
       <div className="mx-auto max-w-7xl px-6">
         <Link to="/products" className="mb-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-muted-foreground hover:text-gold">
-          <ArrowLeft className="h-4 w-4" /> Back to Shop
+          <ArrowLeft className="h-4 w-4" /> {t("pdp.back")}
         </Link>
 
         <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
-          {/* Gallery */}
           <div>
             <div className="card-rim overflow-hidden rounded-3xl">
               <img src={product.image} alt={product.name} className="w-full aspect-square object-cover" />
@@ -52,7 +55,6 @@ function ProductPage() {
             </div>
           </div>
 
-          {/* Info */}
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-gold">{product.tagline}</p>
             <h1 className="mt-4 font-serif text-5xl md:text-6xl">{product.name}</h1>
@@ -65,36 +67,30 @@ function ProductPage() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={() => addToCart(product.slug)}
-                className="btn-solid-gold inline-flex items-center gap-2 rounded-full px-8 py-4 text-xs uppercase tracking-[0.25em] font-medium"
-              >
-                <ShoppingBag className="h-4 w-4" /> Add to Cart
+              <button onClick={() => addToCart(product.slug)} className="btn-solid-gold inline-flex items-center gap-2 rounded-full px-8 py-4 text-xs uppercase tracking-[0.25em] font-medium">
+                <ShoppingBag className="h-4 w-4" /> {t("pdp.addToCart")}
               </button>
-              <button
-                onClick={() => toggleWishlist(product.slug)}
-                className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-4 text-xs uppercase tracking-[0.25em] transition-colors hover:border-gold hover:text-gold"
-              >
+              <button onClick={() => toggleWishlist(product.slug)} className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-4 text-xs uppercase tracking-[0.25em] transition-colors hover:border-gold hover:text-gold">
                 <Heart className={`h-4 w-4 ${wished ? "fill-gold text-gold" : ""}`} />
-                {wished ? "In Wishlist" : "Add to Wishlist"}
+                {wished ? t("pdp.inWishlist") : t("pdp.addWishlist")}
               </button>
             </div>
 
             <div className="mt-10 space-y-1">
-              <Accordion title="Benefits" defaultOpen>
+              <Accordion title={t("pdp.benefits")} defaultOpen>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {product.benefits.map((b) => (
                     <li key={b} className="flex gap-3"><span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold" />{b}</li>
                   ))}
                 </ul>
               </Accordion>
-              <Accordion title="Ingredients">
+              <Accordion title={t("pdp.ingredients")}>
                 <p className="text-sm text-muted-foreground">{product.ingredients.join(", ")}</p>
               </Accordion>
-              <Accordion title="Directions">
+              <Accordion title={t("pdp.directions")}>
                 <p className="text-sm text-muted-foreground">{product.directions}</p>
               </Accordion>
-              <Accordion title="FAQ">
+              <Accordion title={t("pdp.faq")}>
                 <div className="space-y-4">
                   {product.faqs.map((f) => (
                     <div key={f.q}>
@@ -108,11 +104,10 @@ function ProductPage() {
           </div>
         </div>
 
-        {/* Related */}
         <div className="mt-28">
           <div className="mb-10 text-center">
-            <p className="text-xs uppercase tracking-[0.4em] text-gold">You may also love</p>
-            <h2 className="mt-4 font-serif text-4xl">Related Products</h2>
+            <p className="text-xs uppercase tracking-[0.4em] text-gold">{t("pdp.related.eyebrow")}</p>
+            <h2 className="mt-4 font-serif text-4xl">{t("pdp.related.title")}</h2>
           </div>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((p) => (<ProductCard key={p.slug} product={p} />))}

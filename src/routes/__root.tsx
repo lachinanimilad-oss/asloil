@@ -1,4 +1,3 @@
-import { Analytics } from "@vercel/analytics/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -12,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { StoreProvider } from "@/lib/store";
+import { LanguageProvider } from "@/lib/i18n";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 
@@ -66,10 +66,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" },
-      
-    
     ],
-    
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -80,39 +77,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-     <head>
-      <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-E9K66V1C8X');
-
-</script>
-  <HeadContent />
-
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-E9K66V1C8X"
-  />
-
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-E9K66V1C8X');
-      `,
-    }}
-  />
-</head>
+      <head><HeadContent /></head>
       <body>
         {children}
         <Scripts />
-       <Analytics />
       </body>
     </html>
   );
@@ -120,15 +88,32 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  useEffect(() => {
+    let cancelled = false;
+    void import("../lib/analytics").then(({ initAnalytics, trackPageView }) => {
+      if (cancelled) return;
+      initAnalytics();
+      trackPageView(router.state.location.pathname + router.state.location.searchStr);
+      router.subscribe("onResolved", ({ toLocation }) => {
+        trackPageView(toLocation.pathname + toLocation.searchStr);
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [router]);
   return (
     <QueryClientProvider client={queryClient}>
-      <StoreProvider>
-        <Nav />
-        <main className="min-h-screen">
-          <Outlet />
-        </main>
-        <Footer />
-      </StoreProvider>
+      <LanguageProvider>
+        <StoreProvider>
+          <Nav />
+          <main className="min-h-screen">
+            <Outlet />
+          </main>
+          <Footer />
+        </StoreProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }

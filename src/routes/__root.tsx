@@ -101,7 +101,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
-        <Analytics />
+        {typeof window !== "undefined" && <Analytics />}
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Analytics } from "@vercel/analytics/react";
 import {
   Outlet,
   createRootRouteWithContext,
@@ -101,7 +100,6 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
-        {typeof window !== "undefined" && <Analytics />}
       </body>
     </html>
   );

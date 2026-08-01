@@ -29,7 +29,7 @@ function ContactPage() {
         <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2">
           <div className="space-y-8">
             {[
-              { icon: Mail, label: "Email", value: "hello@asloil.com" },
+              { icon: Mail, label: "Email", value: "info@asloil.com" },
               { icon: Phone, label: "Phone", value: "+1 (555) 234-5678" },
               { icon: MapPin, label: "Address", value: "1 Golden Avenue, Casablanca, Morocco" },
             ].map((c) => (
@@ -39,7 +39,16 @@ function ContactPage() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-[0.25em] text-gold">{c.label}</p>
-                  <p className="mt-1 text-foreground">{c.value}</p>
+                  {c.label === "Email" ? (
+  <a
+    href={`mailto:${c.value}`}
+    className="mt-1 text-foreground hover:text-gold"
+  >
+    {c.value}
+  </a>
+) : (
+  <p className="mt-1 text-foreground">{c.value}</p>
+)}
                 </div>
               </div>
             ))}

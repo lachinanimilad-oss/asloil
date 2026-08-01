@@ -165,7 +165,7 @@ export function Footer() {
                 </a>
 
                 <a
-                  href="https://x.com/asloil"
+                  href="https://x.com/asloil_official"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm font-semibold tracking-wider hover:text-gold transition"

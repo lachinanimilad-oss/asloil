@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Product } from "./products";
 
-export type Lang = "en" | "es";
+export type Lang = "en" | "es" | "fa";
 
 export const LANGS: { code: Lang; label: string; short: string }[] = [
   { code: "en", label: "English", short: "EN" },
   { code: "es", label: "Español", short: "ES" },
+  { code: "fa", label: "فارسی", short: "FA" },
 ];
 
 type Dict = Record<string, string>;
@@ -336,8 +337,31 @@ const es: Dict = {
   "meta.wish.title": "Favoritos — ASLOIL®",
   "meta.wish.desc": "Tus favoritos ASLOIL® guardados.",
 };
+const fa: Dict = {
+  // Nav
+  "nav.home": "خانه",
+  "nav.shop": "محصولات",
+  "nav.about": "درباره ما",
+  "nav.faq": "سوالات متداول",
+  "nav.contact": "تماس با ما",
+  "nav.menu": "منو",
+  "nav.language": "زبان",
 
-const dicts: Record<Lang, Dict> = { en, es };
+  // Footer
+  "footer.shop": "فروشگاه",
+  "footer.company": "شرکت",
+  "footer.follow": "شبکه‌های اجتماعی",
+  "footer.rights": "تمامی حقوق محفوظ است.",
+  "footer.tagline":
+    "قدرت طبیعت در دستان شما؛ مراقبت لوکس از پوست و مو.",
+
+  // Home
+  "home.hero.title1": "جادوی",
+  "home.hero.title2": "طبیعت",
+  "home.hero.cta1": "مشاهده محصولات",
+  "home.hero.cta2": "داستان ما",
+};
+const dicts: Record<Lang, Dict> = { en, es, fa };
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
 const LangCtx = createContext<Ctx | null>(null);
@@ -348,13 +372,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("asloil_lang");
-      if (saved === "en" || saved === "es") setLangState(saved);
+      if (saved === "en" || saved === "es" || saved === "fa") {
+  setLangState(saved as Lang);
+}
     } catch {}
   }, []);
 
-  useEffect(() => {
-    if (typeof document !== "undefined") document.documentElement.lang = lang;
-  }, [lang]);
+useEffect(() => {
+  if (typeof document !== "undefined") {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
+  }
+}, [lang]);
 
   const setLang = (l: Lang) => {
     setLangState(l);

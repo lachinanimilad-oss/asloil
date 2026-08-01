@@ -1,21 +1,22 @@
 import { Link } from "@tanstack/react-router";
+import { useI18n } from "@/lib/i18n";
 import { ShoppingBag, Heart, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useStore } from "@/lib/store";
 import logo from "@/assets/asloil-logo.jpg";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/products", label: "Shop" },
-  { to: "/about", label: "About" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
-];
-
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { cart, wishlist } = useStore();
+  const { t, lang, setLang } = useI18n();
+
+const links = [
+  { to: "/", label: t("nav.home") },
+  { to: "/products", label: t("nav.shop") },
+  { to: "/about", label: t("nav.about") },
+  { to: "/faq", label: t("nav.faq") },
+  { to: "/contact", label: t("nav.contact") },
+];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -52,14 +53,49 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Link to="/wishlist" className="relative text-foreground/80 transition-colors hover:text-gold">
-            <Heart className="h-5 w-5" />
-            {wishlist.length > 0 && (
-              <span className="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-full bg-gold text-[10px] font-semibold text-background">
-                {wishlist.length}
-              </span>
-            )}
-          </Link>
+          <div className="hidden md:flex items-center gap-2 rounded-full border border-border/60 px-2 py-1">
+  {["en", "es", "fa"].map((code) => (
+    <button
+      key={code}
+      onClick={() => setLang(code as typeof lang)}
+      className={`px-2 py-1 text-xs font-medium transition-colors ${
+        lang === code
+          ? "text-gold"
+          : "text-muted-foreground hover:text-gold"
+      }`}
+    >
+      {code.toUpperCase()}
+    </button>
+  ))}
+</div>
+
+  <div className="hidden md:flex items-center gap-2 rounded-full border border-border/60 px-2 py-1">
+    {["en", "es", "fa"].map((code) => (
+      <button
+        key={code}
+        onClick={() => setLang(code as typeof lang)}
+        className={`px-2 py-1 text-xs font-medium transition-colors ${
+          lang === code
+            ? "text-gold"
+            : "text-muted-foreground hover:text-gold"
+        }`}
+      >
+        {code.toUpperCase()}
+      </button>
+    ))}
+  </div>
+
+  <Link
+    to="/wishlist"
+    className="relative text-foreground/80 transition-colors hover:text-gold"
+  >
+    <Heart className="h-5 w-5" />
+    {wishlist.length > 0 && (
+      <span className="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-full bg-gold text-[10px] font-semibold text-background">
+        {wishlist.length}
+      </span>
+    )}
+  </Link>
           <Link to="/cart" className="relative text-foreground/80 transition-colors hover:text-gold">
             <ShoppingBag className="h-5 w-5" />
             {cart.length > 0 && (

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Mail, MapPin } from "lucide-react";
-import logo from "@/assets/asloil-logo.jpg.asset.json";
+import logo from "@/assets/asloil-logo.jpg";
 
 export function Footer() {
   return (
@@ -13,7 +13,7 @@ export function Footer() {
           <div>
             <Link to="/" className="flex items-center gap-3">
               <img
-                src={logo.url}
+                src={logo}
                 alt="ASLOIL logo"
                 className="h-12 w-12 rounded-full object-cover ring-2 ring-gold/30"
               />

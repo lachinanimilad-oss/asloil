@@ -68,23 +68,6 @@ const links = [
     </button>
   ))}
 </div>
-
-  <div className="hidden md:flex items-center gap-2 rounded-full border border-border/60 px-2 py-1">
-    {["en", "es", "fa"].map((code) => (
-      <button
-        key={code}
-        onClick={() => setLang(code as typeof lang)}
-        className={`px-2 py-1 text-xs font-medium transition-colors ${
-          lang === code
-            ? "text-gold"
-            : "text-muted-foreground hover:text-gold"
-        }`}
-      >
-        {code.toUpperCase()}
-      </button>
-    ))}
-  </div>
-
   <Link
     to="/wishlist"
     className="relative text-foreground/80 transition-colors hover:text-gold"
